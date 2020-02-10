@@ -4,7 +4,7 @@
       <nav class="navbar">
         <div class="navbar-brand">
           <a class="navbar-item" href="index.html">
-            <img src="./assets/img/logo.jpg" alt="" />
+            <img src="./assets/img/logo.jpg" alt="">
             TV shows store
           </a>
         </div>
@@ -23,18 +23,11 @@
           <div class="field">
             <label class="label">Search</label>
             <div class="control">
-              <input
-                class="input"
-                type="text"
-                placeholder="Game of Thrones, Breaking Bad, ..."
-                v-model="searchTerm"
-                @keypress.enter="search()"
-                v-focus
-              />
+              <input class="input" type="text" placeholder="Game of Thrones, Breaking Bad, ..."
+                v-model="searchTerm" @keypress.enter="search()" v-focus>
             </div>
           </div>
-          <Card
-            v-for="show of shows"
+          <Card v-for="show of shows"
             :key="show.id"
             :title="show.title"
             :description="show.description"
@@ -72,9 +65,8 @@ export default {
       this.$set(show.user, 'favorited', !show.user.favorited);
     },
     search() {
-      this.shows = window.shows.filter(
-        (it) => it.title.toUpperCase().indexOf(this.searchTerm.toUpperCase()) !== -1,
-      );
+      this.shows = window.shows
+        .filter((it) => it.title.toUpperCase().indexOf(this.searchTerm.toUpperCase()) !== -1);
     },
   },
 };

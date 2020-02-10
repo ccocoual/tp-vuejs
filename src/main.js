@@ -13,6 +13,13 @@ Vue.directive('focus', {
   },
 });
 
+Vue.filter('truncate', (value, nbOfChars) => {
+  if (nbOfChars > 0) {
+    return `${value.substr(0, nbOfChars)}...`;
+  }
+  return value;
+});
+
 window.shows = data.shows;
 window.vm = new Vue({
   render: (h) => h(App),

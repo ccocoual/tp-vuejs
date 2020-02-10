@@ -25,7 +25,10 @@
               {{ status }}
             </span>
           </p>
-          <div class="content">{{ description }}</div>
+          <div class="content" @click="toggleDescription()">
+            <template v-if="longDescription">{{ description }}</template>
+            <template v-else>{{ description | truncate(35) }}</template>
+          </div>
         </div>
       </div>
     </div>
@@ -44,6 +47,11 @@ export default {
     'genres',
     'isFavorite',
   ],
+  data() {
+    return {
+      longDescription: false,
+    };
+  },
   computed: {
     titleFavorite() {
       return `${this.title} is ${this.isFavorite ? '' : 'not'} your favorite!`;
@@ -55,6 +63,9 @@ export default {
   methods: {
     toggleFavorite() {
       this.$emit('toggle-favorite');
+    },
+    toggleDescription() {
+      this.longDescription = !this.longDescription;
     },
   },
 };
