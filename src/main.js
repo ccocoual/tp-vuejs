@@ -1,8 +1,6 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 
-import data from './data/api.json';
-
 import App from './App.vue';
 import Shows from './pages/Shows.vue';
 import ShowDetail from './pages/ShowDetail.vue';
@@ -45,7 +43,6 @@ const router = new VueRouter({
   ],
 });
 
-window.shows = data.shows;
 window.vm = new Vue({
   render: (h) => h(App),
   router,

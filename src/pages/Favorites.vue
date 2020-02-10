@@ -18,6 +18,8 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 import Card from '../components/Card.vue';
 
 export default {
@@ -27,8 +29,13 @@ export default {
   data() {
     return {
       title: 'My favorites shows',
-      shows: window.shows,
+      shows: [],
     };
+  },
+  mounted() {
+    axios.get('http://localhost:4000/rest/shows').then((response) => {
+      this.shows = response.data;
+    });
   },
   computed: {
     favoriteShows() {
@@ -38,6 +45,9 @@ export default {
   methods: {
     toggleFavorite(show) {
       this.$set(show.user, 'favorited', !show.user.favorited);
+      axios.post(`http://localhost:4000/rest/shows/${show.id}/favorites`, {
+        isFavorite: show.user.favorited,
+      });
     },
   },
 };

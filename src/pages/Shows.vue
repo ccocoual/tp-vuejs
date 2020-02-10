@@ -8,7 +8,7 @@
                 v-model="searchTerm" @keypress.enter="search()" v-focus>
             </div>
         </div>
-        <Card v-for="show of shows"
+        <Card v-for="show of filteredShows"
             :key="show.id"
             :show-id="show.id"
             :title="show.title"
@@ -25,6 +25,8 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 import Card from '../components/Card.vue';
 
 export default {
@@ -34,21 +36,32 @@ export default {
   data() {
     return {
       title: 'My TV shows',
-      shows: window.shows,
+      shows: [],
+      filteredShows: [],
       searchTerm: '',
     };
+  },
+  mounted() {
+    axios.get('http://localhost:4000/rest/shows').then((response) => {
+      this.shows = response.data;
+      this.filteredShows = response.data;
+    });
   },
   methods: {
     toggleFavorite(show) {
       this.$set(show.user, 'favorited', !show.user.favorited);
 
-      // Redirect to detail if add to favorites
-      if (show.user.favorited) {
-        this.$router.push({ name: 'showDetail', params: { showId: show.id } });
-      }
+      axios.post(`http://localhost:4000/rest/shows/${show.id}/favorites`, {
+        isFavorite: show.user.favorited,
+      }).then(({ data }) => {
+        // Redirect to detail if add to favorites
+        if (data.user.favorited) {
+          this.$router.push({ name: 'showDetail', params: { showId: show.id } });
+        }
+      });
     },
     search() {
-      this.shows = window.shows
+      this.filteredShows = this.shows
         .filter((it) => it.title.toUpperCase().indexOf(this.searchTerm.toUpperCase()) !== -1);
     },
   },
