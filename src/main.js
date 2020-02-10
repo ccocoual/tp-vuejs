@@ -5,24 +5,13 @@ import App from './App.vue';
 import Shows from './pages/Shows.vue';
 import ShowDetail from './pages/ShowDetail.vue';
 import Favorites from './pages/Favorites.vue';
+import Plugin from './plugin';
 
 import './assets/css/app.css';
 
 Vue.config.productionTip = false;
 Vue.use(VueRouter);
-
-Vue.directive('focus', {
-  inserted(el) {
-    el.focus();
-  },
-});
-
-Vue.filter('truncate', (value, nbOfChars) => {
-  if (nbOfChars > 0) {
-    return `${value.substr(0, nbOfChars)}...`;
-  }
-  return value;
-});
+Vue.use(Plugin);
 
 const router = new VueRouter({
   routes: [
