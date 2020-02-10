@@ -1,38 +1,45 @@
+Vue.component('Card', {
+  props: ['title', 'description', 'status', 'image', 'creationDate', 'nbSeasons', 'genres', 'isFavorite'],
+  computed: {
+    titleIsFavorite() {
+      return `${this.title} is ${this.isFavorite ? '' : 'not'} your favorite!`
+    }
+  },
+  template: `<div class="card card-result">
+        <div class="card-header">
+            <p class="card-header-title">{{ titleIsFavorite }}</p>
+            <a class="card-header-icon">
+            <span class="icon">
+                <i class="fa fa-star"></i>
+            </span>
+        </a>
+        </div>
+        <div class="card-content">
+            <div class="media">
+                <div class="media-left">
+                    <figure class="image is-128x200">
+                        <img :src="image" alt="Image">
+                    </figure>
+                </div>
+                <div class="media-content">
+                    <p class="">Created in {{ creationDate }} - {{ nbSeasons }} seasons</p>
+                    <p class="tags">{{ genres }}</p>
+                    <p class="tags"><span class="tag is-primary">{{ status }}</span></p>
+                    <div class="content">{{ description }}</div>
+                </div>
+            </div>
+        </div>
+    </div>`
+});
+
 const vm = new Vue({
   el: '#app',
   data() {
     return {
-      title: 'TV shows'
+      title: 'TV shows store',
+      mockData: window.mockData
     }
-  },
-  beforeCreate() {
-    console.log('beforeCreate', this.title, this.$el)
-  },
-  created() {
-    console.log('created', this.title, this.$el)
-  },
-  beforeMount() {
-    console.log('beforeMount', this.title, this.$el)
-  },
-  mounted() {
-    console.log('mounted', this.title, this.$el)
-  },
-  beforeUpdate() {
-    console.log('beforeUpdate', this.title, this.$el)
-  },
-  updated() {
-    console.log('updated', this.title, this.$el)
-  },
-  beforeDestroy() {
-    console.log('beforeDestroy', this.title, this.$el)
-  },
-  destroyed() {
-    console.log('destroyed', this.title, this.$el)
   }
 });
 
-console.log(vm);
-
-vm.$destroy()
-
-
+window.vm = vm;
