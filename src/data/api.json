@@ -1,4 +1,4 @@
-const mockData = {
+{
   "shows": [
     {
       "id": 1161,
@@ -1093,16 +1093,4 @@ const mockData = {
   ],
   "locale": "en",
   "errors": []
-};
-
-const API = {
-  search(query) {
-    if (!query) {
-      return Promise.resolve(mockData.shows)
-    }
-    return Promise.resolve(mockData.shows.filter(it => it.title.match(query)))
-  }
-};
-
-window.API = API;
-window.mockData = mockData;
+}
