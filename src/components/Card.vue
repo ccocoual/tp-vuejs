@@ -2,8 +2,8 @@
   <div class="card card-result">
     <div class="card-header">
       <p class="card-header-title">{{ titleFavorite }}</p>
-      <a class="card-header-icon">
-        <span class="icon">
+      <a class="card-header-icon" @click="toggleFavorite()">
+        <span class="icon" :class="{'is-favorite': isFavorite}">
           <i class="fa fa-star"></i>
         </span>
       </a>
@@ -18,10 +18,12 @@
         <div class="media-content">
           <p class>Created in {{ creationDate }} - {{ nbSeasons }} seasons</p>
           <p class="tags">
-            <span class="tag">{{ genres }}</span>
+            <span class="tag" v-for="genre of genres" :key="genre">{{ genre }}</span>
           </p>
           <p class="tags">
-            <span class="tag is-warning">{{ status }}</span>
+            <span class="tag" :class="[statusIsContinuing? 'is-warning': 'is-danger']">
+              {{ status }}
+            </span>
           </p>
           <div class="content">{{ description }}</div>
         </div>
@@ -45,6 +47,14 @@ export default {
   computed: {
     titleFavorite() {
       return `${this.title} is ${this.isFavorite ? '' : 'not'} your favorite!`;
+    },
+    statusIsContinuing() {
+      return this.status === 'Continuing';
+    },
+  },
+  methods: {
+    toggleFavorite() {
+      this.$emit('toggle-favorite');
     },
   },
 };

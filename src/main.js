@@ -7,6 +7,12 @@ import './assets/css/app.css';
 
 Vue.config.productionTip = false;
 
+Vue.directive('focus', {
+  inserted(el) {
+    el.focus();
+  },
+});
+
 window.shows = data.shows;
 window.vm = new Vue({
   render: (h) => h(App),
