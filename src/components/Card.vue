@@ -1,7 +1,11 @@
 <template>
   <div class="card card-result">
     <div class="card-header">
-      <p class="card-header-title">{{ titleFavorite }}</p>
+      <p class="card-header-title">
+        <router-link :to="{name: 'showDetail', params: { showId: showId }}">
+          {{ titleFavorite }}
+        </router-link>
+      </p>
       <a class="card-header-icon" @click="toggleFavorite()">
         <span class="icon" :class="{'is-favorite': isFavorite}">
           <i class="fa fa-star"></i>
@@ -38,6 +42,7 @@
 <script>
 export default {
   props: [
+    'showId',
     'title',
     'description',
     'status',

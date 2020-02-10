@@ -1,4 +1,4 @@
-# lab6
+# lab7
 
 ## Project setup
 ```
