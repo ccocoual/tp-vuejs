@@ -7,6 +7,8 @@ import ShowDetail from './pages/ShowDetail.vue';
 import Favorites from './pages/Favorites.vue';
 import Plugin from './plugin';
 
+import store from './store';
+
 import './assets/css/app.css';
 
 Vue.config.productionTip = false;
@@ -32,7 +34,8 @@ const router = new VueRouter({
   ],
 });
 
-window.vm = new Vue({
+new Vue({
   render: (h) => h(App),
+  store,
   router,
 }).$mount('#app');
