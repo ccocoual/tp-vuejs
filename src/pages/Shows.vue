@@ -4,28 +4,27 @@
     <div class="field">
       <label class="label">Search</label>
       <div class="control">
-        <input class="input" type="text" placeholder="Game of Thrones, Breaking Bad, ..."
-               v-model="searchTerm" @keypress.enter="searchShows()" v-focus>
+        <input @input="e => setSearchTerm(e.target.value)" @keypress.enter="searchShows()" class="input"
+               placeholder="Game of Thrones, Breaking Bad, ..." type="text" v-focus>
       </div>
     </div>
-    <Card v-for="show of filteredShows"
-          :key="show.id"
-          :show-id="show.id"
-          :title="show.title"
+    <Card :creation-date="show.creation"
           :description="show.description"
-          :status="show.status"
-          :is-favorite="show.user.favorited"
-          :image="show.images.poster"
-          :creation-date="show.creation"
-          :nb-seasons="show.seasons"
           :genres="show.genres"
+          :image="show.images.poster"
+          :is-favorite="show.user.favorited"
+          :key="show.id"
+          :nb-seasons="show.seasons"
+          :show-id="show.id"
+          :status="show.status"
+          :title="show.title"
           @toggle-favorite="toggleFavorite(show)"
+          v-for="show of filteredShows"
     />
   </div>
 </template>
 
 <script>
-import axios from 'axios';
 import { mapActions, mapState } from 'vuex';
 
 import Card from '../components/Card.vue';
@@ -39,7 +38,7 @@ export default {
       title: 'My TV shows',
     };
   },
-  computed: mapState([
+  computed: mapState('shows', [
     'shows',
     'filteredShows',
     'searchTerm',
@@ -49,22 +48,22 @@ export default {
     this.getShows();
   },
   methods: {
-    ...mapActions(['getShows', 'searchShows']),
+    ...mapActions('shows', ['getShows', 'searchShows', 'setSearchTerm']),
+    ...mapActions('favorite-shows', ['setFavoriteShow']),
     toggleFavorite(show) {
-      this.$set(show.user, 'favorited', !show.user.favorited);
+      const favorited = !show.user.favorited;
+      this.setFavoriteShow({
+        showId: show.id,
+        favorited,
+      });
 
-      axios.post(`http://localhost:4000/rest/shows/${show.id}/favorites`, {
-        isFavorite: show.user.favorited,
-      })
-        .then(({ data }) => {
-          // Redirect to detail if add to favorites
-          if (data.user.favorited) {
-            this.$router.push({
-              name: 'showDetail',
-              params: { showId: show.id },
-            });
-          }
+      // Redirect to detail if add to favorites
+      if (favorited) {
+        this.$router.push({
+          name: 'showDetail',
+          params: { showId: show.id },
         });
+      }
     },
   },
 };

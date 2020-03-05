@@ -17,7 +17,11 @@ Vue.use(Plugin);
 
 const router = new VueRouter({
   routes: [
-    { name: 'shows', path: '/shows', component: Shows },
+    {
+      name: 'shows',
+      path: '/shows',
+      component: Shows,
+    },
     {
       name: 'showDetail',
       path: '/shows/:showId',
@@ -30,7 +34,11 @@ const router = new VueRouter({
       component: Favorites,
       alias: '/starred',
     },
-    { name: 'home', path: '', redirect: '/shows' },
+    {
+      name: 'home',
+      path: '',
+      redirect: '/shows',
+    },
   ],
 });
 

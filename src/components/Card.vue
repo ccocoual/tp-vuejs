@@ -6,8 +6,8 @@
           {{ titleFavorite }}
         </router-link>
       </p>
-      <a class="card-header-icon" @click="toggleFavorite()">
-        <span class="icon" :class="{'is-favorite': isFavorite}">
+      <a @click="toggleFavorite()" class="card-header-icon">
+        <span :class="{'is-favorite': isFavorite}" class="icon">
           <i class="fa fa-star"></i>
         </span>
       </a>
@@ -16,20 +16,20 @@
       <div class="media">
         <div class="media-left">
           <figure class="image is-128x200">
-            <img :src="image" alt="Image" />
+            <img :src="image" alt="Image"/>
           </figure>
         </div>
         <div class="media-content">
           <p class>Created in {{ creationDate }} - {{ nbSeasons }} seasons</p>
           <p class="tags">
-            <span class="tag" v-for="genre of genres" :key="genre">{{ genre }}</span>
+            <span :key="genre" class="tag" v-for="genre of genres">{{ genre }}</span>
           </p>
           <p class="tags">
-            <span class="tag" :class="[statusIsContinuing? 'is-warning': 'is-danger']">
+            <span :class="[statusIsContinuing? 'is-warning': 'is-danger']" class="tag">
               {{ status }}
             </span>
           </p>
-          <div class="content" @click="toggleDescription()">
+          <div @click="toggleDescription()" class="content">
             <template v-if="longDescription">{{ description }}</template>
             <template v-else>{{ description | truncate(35) }}</template>
           </div>
