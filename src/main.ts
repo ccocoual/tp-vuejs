@@ -32,7 +32,7 @@ const router = new VueRouter({
   ],
 });
 
-window.vm = new Vue({
+new Vue({
   render: (h) => h(App),
   router,
 }).$mount('#app');

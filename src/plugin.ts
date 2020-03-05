@@ -1,12 +1,14 @@
+import { VueConstructor } from 'vue';
+
 export default {
-  install(Vue) {
+  install(Vue: VueConstructor) {
     Vue.directive('focus', {
       inserted(el) {
         el.focus();
       },
     });
 
-    Vue.filter('truncate', (value, nbOfChars) => {
+    Vue.filter('truncate', (value: string, nbOfChars: number) => {
       if (nbOfChars > 0) {
         return `${value.substr(0, nbOfChars)}...`;
       }
