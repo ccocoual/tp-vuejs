@@ -4,22 +4,31 @@
     <div class="field">
       <label class="label">Search</label>
       <div class="control">
-        <input @input="e => setSearchTerm(e.target.value)" @keypress.enter="searchShows()" class="input"
-               placeholder="Game of Thrones, Breaking Bad, ..." type="text" v-focus>
+        <input
+          @input="(e) => setSearchTerm(e.target.value)"
+          @keypress.enter="searchShows()"
+          class="input"
+          placeholder="Game of Thrones, Breaking Bad, ..."
+          type="text"
+          v-focus
+        />
       </div>
     </div>
-    <Card :creation-date="show.creation"
-          :description="show.description"
-          :genres="show.genres"
-          :image="show.images.poster"
-          :is-favorite="show.user.favorited"
-          :key="show.id"
-          :nb-seasons="show.seasons"
-          :show-id="show.id"
-          :status="show.status"
-          :title="show.title"
-          @toggle-favorite="toggleFavorite(show)"
-          v-for="show of filteredShows"
+    <span v-if="isShowsLoading">Loading...</span>
+    <Card
+      v-else
+      v-for="show of filteredShows"
+      :key="show.id"
+      :creation-date="show.creation"
+      :description="show.description"
+      :genres="show.genres"
+      :image="show.images.poster"
+      :is-favorite="show.user.favorited"
+      :nb-seasons="show.seasons"
+      :show-id="show.id"
+      :status="show.status"
+      :title="show.title"
+      @toggle-favorite="toggleFavorite(show)"
     />
   </div>
 </template>
@@ -38,12 +47,7 @@ export default {
       title: 'My TV shows',
     };
   },
-  computed: mapState('shows', [
-    'shows',
-    'filteredShows',
-    'searchTerm',
-    'isShowsLoading',
-  ]),
+  computed: mapState('shows', ['shows', 'filteredShows', 'searchTerm', 'isShowsLoading']),
   mounted() {
     this.getShows();
   },
